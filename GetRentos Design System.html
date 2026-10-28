@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ilé — Design System</title>
+<link rel="icon" type="image/svg+xml" href="assets/ile_mark.svg">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/components.css">
+<style>
+  body { background: var(--paper); }
+  .ds-shell { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
+
+  /* TOC */
+  .ds-toc { position: sticky; top: 0; height: 100vh; overflow-y: auto; border-right: 1px solid var(--ink-150); background: var(--surface); padding: 0 0 32px; }
+  .ds-toc .sidebar-brand { padding: 22px 22px 8px; }
+  .ds-toc .brand-sub { font: var(--text-micro); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-400); padding: 0 22px 18px; }
+  .toc-group { padding: 6px 12px; }
+  .toc-group h4 { font: var(--text-micro); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-400); padding: 12px 10px 4px; margin: 0; }
+  .toc-link { display: block; padding: 7px 10px; border-radius: 8px; color: var(--ink-600); font: var(--text-sm); font-weight: 500; text-decoration: none; cursor: pointer; }
+  .toc-link:hover { background: var(--ink-50); color: var(--ink-900); }
+  .toc-link.active { background: var(--primary-soft); color: var(--primary); font-weight: 600; }
+
+  /* Main */
+  .ds-main { padding: 0 0 120px; min-width: 0; }
+  .ds-hero { padding: 64px 56px 48px; border-bottom: 1px solid var(--ink-150); background:
+     radial-gradient(120% 140% at 100% 0%, var(--green-50) 0%, transparent 55%), var(--surface); }
+  .ds-hero h1 { font: var(--text-display); color: var(--ink-900); margin: 0 0 12px; letter-spacing: -.02em; }
+  .ds-hero p { font: var(--text-body-lg); color: var(--ink-600); max-width: 620px; margin: 0; }
+  .ds-hero .pill-row { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+  .hpill { display: inline-flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--ink-200); border-radius: var(--r-pill); padding: 7px 14px; font: var(--text-caption); font-weight: 600; color: var(--ink-700); }
+  .hpill .sw { width: 13px; height: 13px; border-radius: 4px; }
+
+  section.ds { padding: 52px 56px; border-bottom: 1px solid var(--ink-150); scroll-margin-top: 12px; }
+  .ds-head { margin-bottom: 28px; }
+  .ds-eyebrow { font: var(--text-micro); text-transform: uppercase; letter-spacing: .1em; color: var(--primary); font-weight: 700; }
+  .ds-head h2 { font: var(--text-h1); color: var(--ink-900); margin: 6px 0 8px; letter-spacing: -.01em; }
+  .ds-head p { font: var(--text-body); color: var(--ink-500); max-width: 640px; margin: 0; }
+
+  .ds-sub { font: var(--text-micro); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-400); margin: 32px 0 14px; font-weight: 700; }
+  .grid { display: grid; gap: 16px; }
+  .demo { background: var(--surface); border: 1px solid var(--ink-150); border-radius: var(--r-lg); padding: 28px; box-shadow: var(--shadow-xs); }
+  .demo-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+
+  /* Color */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px,1fr)); gap: 10px; }
+  .sw-card { border: 1px solid var(--ink-150); border-radius: var(--r-md); overflow: hidden; cursor: pointer; background: var(--surface); transition: box-shadow var(--dur), transform var(--dur); }
+  .sw-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .sw-chip { height: 64px; }
+  .sw-info { padding: 8px 10px; }
+  .sw-name { font: var(--text-caption); font-weight: 600; color: var(--ink-900); }
+  .sw-hex { font-family: var(--font-mono); font-size: .7rem; color: var(--ink-500); text-transform: uppercase; }
+
+  /* Type scale */
+  .type-row { display: grid; grid-template-columns: 130px 1fr; gap: 24px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--ink-100); }
+  .type-row:last-child { border-bottom: none; }
+  .type-meta { font-family: var(--font-mono); font-size: .72rem; color: var(--ink-500); line-height: 1.6; }
+  .type-meta b { display: block; color: var(--ink-800); font-size: .8rem; }
+
+  /* spacing */
+  .sp-row { display: flex; align-items: center; gap: 16px; padding: 7px 0; }
+  .sp-bar { background: var(--green-300); height: 16px; border-radius: 3px; }
+  .sp-label { font-family: var(--font-mono); font-size: .8rem; color: var(--ink-700); width: 120px; }
+
+  /* radii + shadow */
+  .box-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 16px; }
+  .box-demo { height: 92px; background: var(--surface); border: 1px solid var(--ink-150); display: grid; place-items: flex-end; padding: 10px; font-family: var(--font-mono); font-size: .72rem; color: var(--ink-500); }
+
+  /* icon grid */
+  .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px,1fr)); gap: 8px; }
+  .icon-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 8px; border: 1px solid var(--ink-100); border-radius: var(--r-md); color: var(--ink-700); }
+  .icon-cell svg { width: 24px; height: 24px; }
+  .icon-cell span { font-family: var(--font-mono); font-size: .65rem; color: var(--ink-500); }
+
+  /* state tabs */
+  .state-tabs { display: inline-flex; background: var(--ink-50); border: 1px solid var(--ink-150); border-radius: var(--r-md); padding: 3px; gap: 2px; margin-bottom: 18px; }
+  .state-tab { border: none; background: transparent; font: var(--text-caption); font-weight: 600; color: var(--ink-500); padding: 6px 14px; border-radius: 7px; cursor: pointer; }
+  .state-tab.active { background: var(--surface); color: var(--ink-900); box-shadow: var(--shadow-xs); }
+  .stage { min-height: 260px; display: grid; }
+  .stage > * { grid-area: 1/1; }
+
+  .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .label-cap { font: var(--text-micro); text-transform: uppercase; letter-spacing: .07em; color: var(--ink-400); font-weight: 700; margin-bottom: 10px; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink-900); color: #fff; padding: 11px 18px; border-radius: var(--r-md); font: var(--text-sm); font-weight: 600; opacity: 0; transition: all var(--dur) var(--ease-out); z-index: 200; box-shadow: var(--shadow-lg); }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 900px) {
+    .ds-shell { grid-template-columns: 1fr; }
+    .ds-toc { display: none; }
+    .ds-hero, section.ds { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="ds-shell">
+  <!-- TOC -->
+  <aside class="ds-toc">
+    <div class="sidebar-brand">
+      <span class="ile-mark"></span><span class="ile-word">Ile</span>
+    </div>
+    <div class="brand-sub">Design System v1.0</div>
+    <nav id="toc"></nav>
+  </aside>
+
+  <main class="ds-main">
+    <header class="ds-hero">
+      <div class="ds-eyebrow">Trust-Driven Property OS</div>
+      <h1>The Ilé Design System</h1>
+      <p>A banking-grade visual language for renting, buying &amp; selling property in Nigeria — where verification, escrow and trust are primary content, never decoration.</p>
+      <div class="pill-row">
+        <span class="hpill"><span class="sw" style="background:var(--primary)"></span>Forest Trust Green</span>
+        <span class="hpill">Hanken Grotesk + IBM Plex Mono</span>
+        <span class="hpill">8pt grid</span>
+        <span class="hpill">Loading · Empty · Error · Success</span>
+      </div>
+    </header>
+
+    <!-- ============ FOUNDATIONS ============ -->
+    <section class="ds" id="color">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Foundations</div>
+        <h2>Color</h2>
+        <p>Forest green carries trust and security. Warm, low-chroma neutrals keep data-dense dashboards calm. Semantic colors stay visually distinct from the brand so status is never ambiguous. Click any swatch to copy its token.</p>
+      </div>
+      <div class="ds-sub">Brand — Forest Trust Green</div>
+      <div class="swatches" id="sw-brand"></div>
+      <div class="ds-sub">Warm Neutral Inks</div>
+      <div class="swatches" id="sw-ink"></div>
+      <div class="ds-sub">Semantic &amp; Escrow</div>
+      <div class="swatches" id="sw-sem"></div>
+    </section>
+
+    <section class="ds" id="type">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Foundations</div>
+        <h2>Typography</h2>
+        <p>Hanken Grotesk for everything UI — legible, friendly, dense-friendly. IBM Plex Mono for money, escrow figures and IDs so numbers read as precise, tabular data.</p>
+      </div>
+      <div class="demo" id="type-scale"></div>
+    </section>
+
+    <section class="ds" id="spacing">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Foundations</div>
+        <h2>Spacing, Grid &amp; Shape</h2>
+        <p>An 8-point base scale (with a 4px half-step) governs all rhythm. Radii and shadows are deliberately soft and warm-tinted.</p>
+      </div>
+      <div class="two-col">
+        <div class="demo">
+          <div class="label-cap">Spacing scale · 8pt base</div>
+          <div id="sp-scale"></div>
+        </div>
+        <div>
+          <div class="demo" style="margin-bottom:16px">
+            <div class="label-cap">Corner radii</div>
+            <div class="box-grid" id="radii"></div>
+          </div>
+          <div class="demo">
+            <div class="label-cap">Elevation</div>
+            <div class="box-grid" id="shadows"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds" id="icons">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Foundations</div>
+        <h2>Iconography</h2>
+        <p>Outlined, single-weight (1.75px stroke), rounded joins. Consistent 24px grid. Used for navigation, specs and status — never for decoration.</p>
+      </div>
+      <div class="demo"><div class="icon-grid" id="icon-grid"></div></div>
+    </section>
+
+    <!-- ============ COMPONENTS ============ -->
+    <section class="ds" id="buttons">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Components</div>
+        <h2>Buttons &amp; Inputs</h2>
+        <p>Primary actions use the brand green. Every form control exposes default, focus, error and disabled states.</p>
+      </div>
+      <div class="demo">
+        <div class="label-cap">Buttons</div>
+        <div class="demo-row" style="margin-bottom:20px">
+          <button class="btn btn-primary">Apply to rent</button>
+          <button class="btn btn-secondary">Schedule viewing</button>
+          <button class="btn btn-ghost">Save</button>
+          <button class="btn btn-gold">Upgrade trust</button>
+          <button class="btn btn-danger">Reject</button>
+          <button class="btn btn-primary btn-loading">Processing</button>
+          <button class="btn btn-primary" disabled>Disabled</button>
+        </div>
+        <div class="label-cap">Sizes</div>
+        <div class="demo-row">
+          <button class="btn btn-primary btn-lg">Large</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary btn-sm">Small</button>
+        </div>
+      </div>
+      <div class="demo" style="margin-top:16px">
+        <div class="two-col">
+          <div class="field">
+            <label class="field-label">Full name <span class="req">*</span></label>
+            <input class="input" placeholder="e.g. Adaeze Okonkwo">
+            <span class="field-hint">As it appears on your government ID.</span>
+          </div>
+          <div class="field">
+            <label class="field-label">Monthly budget</label>
+            <div class="input-group"><span class="prefix">₦</span><input class="input" value="850,000"></div>
+            <span class="field-hint">Maximum rent you can pay per month.</span>
+          </div>
+          <div class="field">
+            <label class="field-label">BVN <span class="req">*</span></label>
+            <input class="input is-error" value="2212" aria-invalid="true">
+            <span class="field-error">BVN must be 11 digits.</span>
+          </div>
+          <div class="field">
+            <label class="field-label">Property reference</label>
+            <input class="input" value="GRT-LAG-00481" disabled>
+            <span class="field-hint">Auto-generated. Cannot be edited.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds" id="trust">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Components · Trust is the UI</div>
+        <h2>Verification, Status &amp; Trust</h2>
+        <p>The signals that make Ilé trustworthy. Verification badges, status chips and trust scores are first-class content shown wherever a person, property or payment appears.</p>
+      </div>
+      <div class="demo">
+        <div class="label-cap">Verification badge — Verified / Pending / Unverified</div>
+        <div class="demo-row" style="margin-bottom:24px" id="vbadges"></div>
+        <div class="label-cap">Status chips</div>
+        <div class="demo-row" style="margin-bottom:24px" id="chips"></div>
+        <div class="label-cap">Avatar with role label</div>
+        <div class="demo-row" style="margin-bottom:24px" id="avatars"></div>
+        <div class="label-cap">Trust score indicator</div>
+        <div class="demo-row" id="trust-scores"></div>
+      </div>
+    </section>
+
+    <section class="ds" id="property">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Components</div>
+        <h2>Property Card</h2>
+        <p>The atom of discovery. Always shows price, verification status and key specs. Supports all four states for variable network conditions.</p>
+      </div>
+      <div class="state-tabs" data-target="pcard-stage">
+        <button class="state-tab active" data-state="success">Success</button>
+        <button class="state-tab" data-state="loading">Loading</button>
+        <button class="state-tab" data-state="empty">Empty</button>
+        <button class="state-tab" data-state="error">Error</button>
+      </div>
+      <div class="demo"><div class="stage" id="pcard-stage"></div></div>
+    </section>
+
+    <section class="ds" id="escrow">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Components · Escrow transparency</div>
+        <h2>Escrow Timeline Tracker</h2>
+        <p>Every payment flow must show users exactly where their money is and what must happen for it to move. Done steps are green; the active milestone pulses in escrow violet.</p>
+      </div>
+      <div class="demo two-col" style="display:grid">
+        <div>
+          <div class="label-cap">Buyer purchase escrow</div>
+          <div class="escrow" id="escrow-demo"></div>
+        </div>
+        <div>
+          <div class="label-cap">Funds-held summary</div>
+          <div class="card card-pad" style="background:var(--escrow-bg); border-color:rgba(91,63,214,.2)">
+            <div class="chip chip--escrow" style="margin-bottom:12px"><span class="dot"></span>Funds in escrow</div>
+            <div class="money" style="font-size:2rem; font-weight:600; color:var(--escrow-text)">₦4,250,000</div>
+            <p style="font:var(--text-sm); color:var(--ink-600); margin:8px 0 0">Held securely by Ilé Escrow. Released to the seller only when verification and final payment milestones are confirmed by both parties.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds" id="states">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Components · Every screen, 4 states</div>
+        <h2>Loading, Empty &amp; Error States</h2>
+        <p>Designed for variable Nigerian network conditions. Skeletons everywhere, friendly empty states that drive action, and recoverable errors with a clear retry.</p>
+      </div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        <div class="demo">
+          <div class="label-cap">Loading skeleton</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="skeleton" style="height:120px;border-radius:10px"></div>
+            <div class="skeleton sk-line" style="width:70%"></div>
+            <div class="skeleton sk-line" style="width:45%"></div>
+            <div style="display:flex;gap:10px"><div class="skeleton sk-circle" style="width:30px;height:30px"></div><div class="skeleton sk-line" style="flex:1;margin-top:8px"></div></div>
+          </div>
+        </div>
+        <div class="demo" style="display:grid;place-items:center"></div>
+        <div class="demo" style="display:grid;place-items:center"></div>
+      </div>
+    </section>
+
+    <section class="ds" id="nav-modal">
+      <div class="ds-head">
+        <div class="ds-eyebrow">Components</div>
+        <h2>Navigation &amp; Modal</h2>
+        <p>The role-aware sidebar anchors every dashboard. The modal shell handles confirmations, offers and escrow explanations.</p>
+      </div>
+      <div class="two-col" style="align-items:start">
+        <div>
+          <div class="label-cap">Sidebar (Renter example)</div>
+          <div style="border:1px solid var(--ink-150); border-radius:var(--r-lg); overflow:hidden; height:480px; box-shadow:var(--shadow-xs)">
+            <div class="sidebar" id="demo-sidebar" style="width:100%"></div>
+          </div>
+        </div>
+        <div>
+          <div class="label-cap">Modal shell</div>
+          <button class="btn btn-secondary" onclick="document.getElementById('demoModal').style.display='grid'">Open modal preview</button>
+          <div class="demo" style="margin-top:14px">
+            <p style="font:var(--text-sm);color:var(--ink-500);margin:0">The modal opens centered over a blurred scrim with a header, scrollable body and a right-aligned action footer. Used for Make Offer, Escrow Explanation, Confirm Release, and destructive confirmations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Modal preview -->
+<div class="modal-scrim" id="demoModal" style="display:none">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="chip chip--escrow" style="margin-bottom:8px"><span class="dot"></span>Escrow protected</div>
+        <div class="modal-title">Confirm escrow deposit</div>
+        <div class="modal-sub">Your funds are held by Ilé until milestones clear.</div>
+      </div>
+      <button class="modal-x" onclick="document.getElementById('demoModal').style.display='none'"></button>
+    </div>
+    <div class="modal-body">
+      <div class="card card-pad" style="background:var(--surface-sunken); display:flex; justify-content:space-between; align-items:center">
+        <div>
+          <div style="font:var(--text-caption);color:var(--ink-500)">Deposit amount</div>
+          <div class="money" style="font-size:1.5rem;font-weight:600;color:var(--ink-900)">₦4,250,000</div>
+        </div>
+        <span class="vbadge vbadge--verified">Verified seller</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="document.getElementById('demoModal').style.display='none'">Cancel</button>
+      <button class="btn btn-primary">Deposit to escrow</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="styles/icons.js"></script>
+<script src="ds-render.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#167F62">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#167F62"/>
+    <g transform="translate(556,300)">
+      <rect x="0" y="0" width="30" height="190" rx="7" fill="#ECF6F1"/>
+      <rect x="58" y="0" width="30" height="190" rx="7" fill="#ECF6F1"/>
+      <rect x="0" y="0" width="88" height="30" rx="7" fill="#ECF6F1"/>
+      <rect x="0" y="176" width="88" height="14" rx="5" fill="#B8862F"/>
+      <line x1="0" y1="-26" x2="34" y2="-2" stroke="#B8862F" stroke-width="12" stroke-linecap="round"/>
+    </g>
+  </svg>
+</template>
+</body>
+</html>

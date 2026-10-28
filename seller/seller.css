@@ -1,0 +1,45 @@
+/* ============================================================
+   Ilé — Seller App
+   (extends renter.css shell + landlord.css + buyer.css:
+    milestones, funds-banner, negotiation thread, donut)
+   ============================================================ */
+
+/* Stat-card text: flex column so labels/values never collide on wrap */
+.stat-top > div:first-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stat-ic.escrow { background: var(--escrow-bg); color: var(--escrow-text); }
+
+/* Listing metrics row (views / saves / enquiries) */
+.listing-metrics { display: flex; align-items: center; gap: 14px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--ink-100); font: var(--text-caption); color: var(--ink-500); }
+.listing-metrics span { display: inline-flex; align-items: center; gap: 5px; }
+.listing-metrics svg { width: 14px; height: 14px; color: var(--ink-400); }
+
+/* Proceeds banner (seller's escrow earnings) — green to distinguish from buyer's purple funds-banner */
+.proceeds-banner { background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 55%, var(--green-500) 100%); color: #fff; border-radius: var(--r-xl); padding: 26px; position: relative; overflow: hidden; }
+.proceeds-banner::after { content: ""; position: absolute; right: -40px; top: -50px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,.08); }
+.proceeds-banner > * { position: relative; z-index: 1; }
+.proceeds-banner .lbl { font: var(--text-micro); text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.82); font-weight: 700; }
+.proceeds-banner .amt { font-family: var(--font-mono); font-size: 2.4rem; font-weight: 700; margin: 6px 0; line-height: 1; }
+.proceeds-banner .cpill { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.16); padding: 7px 13px; border-radius: var(--r-pill); font: var(--text-caption); font-weight: 600; margin-top: 14px; }
+.proceeds-banner .cpill svg { width: 15px; height: 15px; }
+
+/* Valuation tool */
+.val-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: start; }
+.val-result { background: linear-gradient(135deg, var(--green-700), var(--green-600)); color: #fff; border-radius: var(--r-xl); padding: 28px; position: sticky; top: 0; }
+.val-result .vr-lbl { font: var(--text-caption); color: rgba(255,255,255,.82); }
+.val-result .vr-range { font-family: var(--font-mono); font-size: 1.9rem; font-weight: 700; line-height: 1.1; margin: 8px 0; }
+.val-result .vr-mid { font: var(--text-sm); color: rgba(255,255,255,.85); }
+.val-meter { height: 10px; border-radius: 99px; background: rgba(255,255,255,.2); margin: 20px 0 8px; position: relative; overflow: visible; }
+.val-meter .fill { height: 100%; border-radius: 99px; background: #fff; }
+.val-meter .pin { position: absolute; top: -5px; width: 20px; height: 20px; border-radius: 50%; background: var(--gold-400); border: 3px solid #fff; transform: translateX(-50%); box-shadow: var(--shadow-md); }
+.val-scale { display: flex; justify-content: space-between; font: var(--text-micro); color: rgba(255,255,255,.7); }
+.val-verdict { margin-top: 20px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.18); font: var(--text-sm); line-height: 1.5; }
+.val-verdict b { color: #fff; }
+
+/* Comparable sales table tweaks reuse .dtable */
+.comp-note { font: var(--text-caption); color: var(--ink-500); margin: 10px 0 0; display: flex; align-items: flex-start; gap: 7px; line-height: 1.5; }
+.comp-note svg { width: 14px; height: 14px; color: var(--ink-400); flex: none; margin-top: 2px; }
+
+@media (max-width: 1080px) {
+  .val-grid { grid-template-columns: 1fr; }
+  .val-result { position: static; }
+}

@@ -1,0 +1,91 @@
+/* ============================================================
+   Ilé — Landlord App (extends renter.css app shell)
+   ============================================================ */
+
+/* Occupancy donut */
+.donut { --val: 80; --color: var(--primary); width: 132px; height: 132px; border-radius: 50%; position: relative; flex: none;
+  background: conic-gradient(var(--color) calc(var(--val) * 1%), var(--ink-100) 0); display: grid; place-items: center; }
+.donut .inner { width: 96px; height: 96px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; text-align: center; }
+.donut .inner b { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; color: var(--ink-900); line-height: 1; }
+.donut .inner span { font: var(--text-micro); text-transform: uppercase; letter-spacing: .05em; color: var(--ink-500); }
+
+/* Bar chart */
+.barchart { display: flex; align-items: flex-end; gap: 14px; height: 180px; padding-top: 10px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; }
+.bar { width: 100%; max-width: 46px; border-radius: 7px 7px 0 0; background: linear-gradient(var(--green-400), var(--green-600)); transition: height var(--dur-slow) var(--ease-out); position: relative; }
+.bar.peak { background: linear-gradient(var(--gold-400), var(--gold-500)); }
+.bar:hover::after { content: attr(data-v); position: absolute; top: -22px; left: 50%; transform: translateX(-50%); background: var(--ink-900); color: #fff; font: var(--text-micro); font-family: var(--font-mono); padding: 2px 7px; border-radius: 5px; white-space: nowrap; }
+.bar-label { font: var(--text-caption); color: var(--ink-500); }
+
+/* Generic data table */
+.dtable { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--ink-150); border-radius: var(--r-lg); overflow: hidden; }
+.dtable th, .dtable td { text-align: left; padding: 13px 16px; font: var(--text-sm); border-bottom: 1px solid var(--ink-100); }
+.dtable thead th { background: var(--surface-sunken); font: var(--text-caption); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-500); }
+.dtable tbody tr { cursor: pointer; transition: background var(--dur-fast); }
+.dtable tbody tr:hover { background: var(--surface-sunken); }
+.dtable tbody tr:last-child td { border-bottom: none; }
+.dtable td.money, .dtable th.money { font-family: var(--font-mono); text-align: right; }
+.table-wrap { overflow-x: auto; border-radius: var(--r-lg); }
+
+/* Mobile: data tables → stacked labeled cards (cells need data-label) */
+@media (max-width: 820px) {
+  .dtable { border: none; background: none; }
+  .dtable thead { display: none; }
+  .dtable tbody, .dtable tr, .dtable td { display: block; width: 100%; }
+  .dtable tr { border: 1px solid var(--ink-150); border-radius: var(--r-md); padding: 4px 14px; margin-bottom: 10px; background: var(--surface); box-shadow: var(--shadow-xs); }
+  .dtable tbody tr:hover { background: var(--surface); }
+  .dtable td { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 9px 0; text-align: right; border-bottom: 1px solid var(--ink-100); }
+  .dtable tr td:last-child { border-bottom: none; }
+  .dtable td::before { content: attr(data-label); font: var(--text-caption); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-500); text-align: left; flex: none; }
+  .dtable td.money { text-align: right; }
+  .dtable td:not([data-label])::before { content: ""; }
+  .table-wrap { overflow: visible; }
+}
+
+/* Property tile */
+.ptile { background: var(--surface); border: 1px solid var(--ink-150); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer; transition: box-shadow var(--dur), transform var(--dur); }
+.ptile:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+.ptile-media { height: 130px; background: repeating-linear-gradient(135deg, var(--ink-100), var(--ink-100) 12px, var(--ink-50) 12px, var(--ink-50) 24px); position: relative; display: grid; place-items: center; }
+.ptile-media span { font-family: var(--font-mono); font-size: .7rem; color: var(--ink-400); }
+.ptile-body { padding: 16px; }
+.occ-bar { height: 6px; border-radius: 99px; background: var(--ink-100); overflow: hidden; margin-top: 4px; }
+.occ-bar .fill { height: 100%; background: var(--primary); border-radius: 99px; }
+
+/* SLA timer */
+.sla { display: inline-flex; align-items: center; gap: 6px; font: var(--text-caption); font-weight: 600; font-family: var(--font-mono); }
+.sla.ok { color: var(--success-text); }
+.sla.warn { color: var(--warning-text); }
+.sla.breach { color: var(--error-text); }
+.sla svg { width: 14px; height: 14px; }
+
+/* Pipeline / priority dot */
+.prio { display: inline-flex; align-items: center; gap: 6px; font: var(--text-caption); font-weight: 600; }
+.prio .pd { width: 8px; height: 8px; border-radius: 50%; }
+.prio.High .pd { background: var(--error); } .prio.High { color: var(--error-text); }
+.prio.Medium .pd { background: var(--warning); } .prio.Medium { color: var(--warning-text); }
+.prio.Low .pd { background: var(--ink-400); } .prio.Low { color: var(--ink-600); }
+
+/* progress segmented (legend) */
+.legend { display: flex; flex-direction: column; gap: 10px; }
+.legend-row { display: flex; align-items: center; gap: 10px; font: var(--text-sm); }
+.legend-sw { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.legend-row .lr-name { color: var(--ink-700); flex: 1; }
+.legend-row .lr-val { font-family: var(--font-mono); font-weight: 600; color: var(--ink-900); }
+
+/* stacked expense bar */
+.stack { display: flex; height: 14px; border-radius: 99px; overflow: hidden; margin: 4px 0 18px; }
+.stack > div { height: 100%; }
+
+/* mini kpi inline */
+.kpi-inline { display: flex; gap: 24px; flex-wrap: wrap; }
+.kpi-inline > div .k { font: var(--text-caption); color: var(--ink-500); }
+.kpi-inline > div .v { font: var(--text-h3); color: var(--ink-900); font-weight: 700; }
+.kpi-inline > div .v.money { font-family: var(--font-mono); font-size: 1.25rem; }
+
+/* tenant profile header */
+.profile-head { display: flex; gap: 18px; align-items: center; padding: 22px; background: linear-gradient(135deg, var(--green-700), var(--green-600)); border-radius: var(--r-xl); color: #fff; }
+.profile-head .ph-name { font: var(--text-h2); color: #fff; }
+.profile-head .ph-sub { font: var(--text-sm); color: rgba(255,255,255,.78); }
+
+@media (max-width: 1080px) { .barchart { gap: 8px; } }
+@media (max-width: 820px) { .kpi-inline { gap: 16px; } }

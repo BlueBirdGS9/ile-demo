@@ -1,0 +1,137 @@
+/* ============================================================
+   Ilé — Design Tokens
+   Trust-Driven Property Operating System
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,400..700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ---------- Brand: Forest Trust Green ---------- */
+  --green-50:  #ECF6F1;
+  --green-100: #D2EBE1;
+  --green-200: #A6D6C4;
+  --green-300: #6FBBA1;
+  --green-400: #389C7E;
+  --green-500: #167F62;
+  --green-600: #0E5A47;  /* PRIMARY BRAND */
+  --green-700: #0B4839;
+  --green-800: #08372B;
+  --green-900: #052019;
+
+  --primary:        var(--green-600);
+  --primary-hover:  var(--green-700);
+  --primary-press:  var(--green-800);
+  --primary-soft:   var(--green-50);
+  --primary-softer: #F3F9F6;
+  --on-primary:     #FFFFFF;
+
+  /* ---------- Accent: Premium Gold (used sparingly) ---------- */
+  --gold-50:  #FBF4E2;
+  --gold-100: #F4E6C0;
+  --gold-400: #D2A94E;
+  --gold-500: #B8862F;
+  --gold-600: #97691E;
+
+  /* ---------- Warm Neutral Inks ---------- */
+  --ink-900: #14201B;  /* headings / near-black */
+  --ink-800: #233029;
+  --ink-700: #3A453F;  /* body strong */
+  --ink-600: #515c56;
+  --ink-500: #6A756F;  /* muted text */
+  --ink-400: #8B958F;  /* placeholder */
+  --ink-300: #B6BFB9;  /* borders strong */
+  --ink-200: #DCE2DE;  /* borders */
+  --ink-150: #E6EAE7;
+  --ink-100: #EEF1EF;  /* hairlines / track */
+  --ink-50:  #F5F7F5;  /* subtle fill */
+
+  --paper:   #FBFCFB;  /* app background */
+  --surface: #FFFFFF;  /* cards */
+  --surface-sunken: #F7F9F8;
+
+  /* ---------- Semantic ---------- */
+  --success:      #15935F;
+  --success-bg:   #E6F5EE;
+  --success-text: #0B6A43;
+
+  --warning:      #C77D0A;
+  --warning-bg:   #FBF0DC;
+  --warning-text: #8A5400;
+
+  --error:        #CF3B36;
+  --error-bg:     #FBE9E8;
+  --error-text:   #9E2420;
+
+  --info:         #2563B8;
+  --info-bg:      #E7F0FB;
+  --info-text:    #194B91;
+
+  --escrow:       #5B3FD6;   /* funds-held / in-escrow accent */
+  --escrow-bg:    #ECE8FB;
+  --escrow-text:  #3F2BA6;
+
+  /* ---------- Typography ---------- */
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --text-display: 700 2.75rem/1.08 var(--font-sans);  /* 44 */
+  --text-h1: 700 2rem/1.15 var(--font-sans);          /* 32 */
+  --text-h2: 700 1.5rem/1.25 var(--font-sans);        /* 24 */
+  --text-h3: 600 1.25rem/1.3 var(--font-sans);        /* 20 */
+  --text-h4: 600 1.0625rem/1.35 var(--font-sans);     /* 17 */
+  --text-body-lg: 400 1.125rem/1.6 var(--font-sans);  /* 18 */
+  --text-body: 400 0.9375rem/1.55 var(--font-sans);   /* 15 */
+  --text-sm: 400 0.875rem/1.5 var(--font-sans);       /* 14 */
+  --text-caption: 500 0.8125rem/1.4 var(--font-sans); /* 13 */
+  --text-micro: 600 0.6875rem/1.3 var(--font-sans);   /* 11 */
+
+  /* ---------- Spacing (8pt base, 4 half-step) ---------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+
+  /* ---------- Radii ---------- */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --r-2xl: 28px;
+  --r-pill: 999px;
+
+  /* ---------- Shadows (warm-tinted) ---------- */
+  --shadow-xs: 0 1px 2px rgba(16,32,26,.06);
+  --shadow-sm: 0 1px 3px rgba(16,32,26,.08), 0 1px 2px rgba(16,32,26,.04);
+  --shadow-md: 0 4px 12px -2px rgba(16,32,26,.10), 0 2px 6px -2px rgba(16,32,26,.06);
+  --shadow-lg: 0 16px 40px -12px rgba(16,32,26,.20), 0 4px 12px -4px rgba(16,32,26,.08);
+  --shadow-focus: 0 0 0 3px rgba(14,90,71,.18);
+
+  /* ---------- Motion ---------- */
+  --ease: cubic-bezier(.4,0,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 360ms;
+
+  --container: 1240px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink-700);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--green-200); color: var(--green-900); }

@@ -1,0 +1,97 @@
+/* ============================================================
+   Ilé — Agent App (extends renter.css shell + landlord.css)
+   ============================================================ */
+
+/* Stat-card text: flex column so labels/values never collide on wrap */
+.stat-top > div:first-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stat-ic.escrow { background: var(--escrow-bg); color: var(--escrow-text); }
+
+/* Safety: size bare icons in location/tag rows so they never balloon in flex */
+.pcard-loc svg { width: 15px; height: 15px; flex: none; }
+.tag svg { width: 14px; height: 14px; flex: none; }
+
+/* Next-up hero (today's next viewing) */
+.nextup { background: linear-gradient(135deg, var(--green-700), var(--green-600) 60%, var(--green-500)); color: #fff; border-radius: var(--r-xl); padding: 24px; position: relative; overflow: hidden; }
+.nextup::after { content: ""; position: absolute; right: -30px; bottom: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,.08); }
+.nextup > * { position: relative; z-index: 1; }
+.nextup .ey { font: var(--text-micro); text-transform: uppercase; letter-spacing: .09em; color: rgba(255,255,255,.8); font-weight: 700; }
+.nextup .ttl { font: var(--text-h3); font-weight: 700; margin: 6px 0 2px; }
+.nextup .meta { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0 18px; font: var(--text-sm); }
+.nextup .meta span { display: inline-flex; align-items: center; gap: 7px; color: rgba(255,255,255,.92); }
+.nextup .meta svg { width: 16px; height: 16px; opacity: .85; }
+.nextup .acts { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Day timeline */
+.timeline { position: relative; padding-left: 4px; }
+.tl-row { display: grid; grid-template-columns: 76px 1fr; gap: 16px; position: relative; padding-bottom: 18px; }
+.tl-row:last-child { padding-bottom: 0; }
+.tl-time { font: var(--text-sm); font-weight: 700; color: var(--ink-700); text-align: right; padding-top: 14px; font-family: var(--font-mono); }
+.tl-time .ap { display: block; font: var(--text-micro); color: var(--ink-400); font-weight: 600; }
+.tl-track { position: absolute; left: 84px; top: 0; bottom: 0; width: 2px; background: var(--ink-150); }
+.tl-row:last-child .tl-track { display: none; }
+.tl-dot { position: absolute; left: 79px; top: 18px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 3px solid var(--ink-300); z-index: 1; }
+.tl-row.done .tl-dot { background: var(--success); border-color: var(--success); }
+.tl-row.now .tl-dot { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-softer); }
+.tl-card { background: var(--surface); border: 1px solid var(--ink-150); border-radius: var(--r-lg); padding: 14px 16px; box-shadow: var(--shadow-xs); cursor: pointer; transition: box-shadow .15s, border-color .15s; }
+.tl-card:hover { box-shadow: var(--shadow-md); border-color: var(--ink-200); }
+.tl-row.now .tl-card { border-color: var(--green-300); }
+
+/* Task card */
+.task-card { display: flex; gap: 14px; align-items: flex-start; background: var(--surface); border: 1px solid var(--ink-150); border-radius: var(--r-lg); padding: 16px; box-shadow: var(--shadow-xs); transition: box-shadow .15s; }
+.task-card:hover { box-shadow: var(--shadow-md); }
+.task-card.done { opacity: .62; }
+.task-ic { width: 42px; height: 42px; border-radius: 11px; display: grid; place-items: center; flex: none; background: var(--green-50); color: var(--primary); }
+.task-ic svg { width: 20px; height: 20px; }
+.task-check { width: 24px; height: 24px; border-radius: 7px; border: 2px solid var(--ink-300); display: grid; place-items: center; cursor: pointer; flex: none; background: var(--surface); transition: all .15s; }
+.task-check.on { background: var(--success); border-color: var(--success); color: #fff; }
+.task-check svg { width: 15px; height: 15px; }
+.prio { font: var(--text-micro); font-weight: 700; padding: 2px 8px; border-radius: var(--r-pill); }
+.prio.High { background: var(--error-bg); color: var(--error-text); }
+.prio.Medium { background: var(--warning-bg); color: var(--warning-text); }
+.prio.Low { background: var(--ink-100); color: var(--ink-500); }
+
+/* Fee tag */
+.fee-tag { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-mono); font-weight: 700; font-size: .8rem; color: var(--primary); background: var(--green-50); border-radius: var(--r-pill); padding: 3px 10px; }
+.fee-tag svg { width: 13px; height: 13px; }
+
+/* Earnings banner */
+.earn-banner { background: linear-gradient(135deg, var(--escrow) 0%, #4a32b8 100%); color: #fff; border-radius: var(--r-xl); padding: 26px; position: relative; overflow: hidden; }
+.earn-banner::after { content: ""; position: absolute; right: -40px; top: -50px; width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,.08); }
+.earn-banner > * { position: relative; z-index: 1; }
+.earn-banner .lbl { font: var(--text-micro); text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.8); font-weight: 700; }
+.earn-banner .amt { font-family: var(--font-mono); font-size: 2.5rem; font-weight: 700; margin: 6px 0; line-height: 1; }
+.earn-banner .cpill { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.16); padding: 7px 13px; border-radius: var(--r-pill); font: var(--text-caption); font-weight: 600; margin-top: 14px; }
+.earn-banner .cpill svg { width: 15px; height: 15px; }
+
+/* ---------------- Property access panel (agent) ---------------- */
+.access-panel { background: var(--surface); border: 1px solid var(--ink-200); border-radius: var(--r-md); padding: 14px; }
+.ap-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.ap-method { display: inline-flex; align-items: center; gap: 6px; font: var(--text-sm); font-weight: 700; color: var(--ink-900); }
+.ap-method svg { width: 16px; height: 16px; color: var(--primary); }
+.ap-src { display: inline-flex; align-items: center; gap: 5px; font: var(--text-micro); font-weight: 600; color: var(--ink-500); }
+.ap-src svg { width: 13px; height: 13px; color: var(--success); }
+.ap-row { display: flex; align-items: center; gap: 9px; font: var(--text-sm); color: var(--ink-700); padding: 5px 0; }
+.ap-row svg { width: 16px; height: 16px; flex: none; color: var(--ink-400); }
+.ap-contact { font-weight: 600; color: var(--ink-900); }
+.ap-note { display: flex; gap: 9px; font: var(--text-caption); color: var(--ink-600); background: var(--gold-100); border-radius: var(--r-sm); padding: 9px 11px; margin: 8px 0; }
+.ap-note svg { width: 15px; height: 15px; flex: none; color: var(--gold-600); margin-top: 1px; }
+.ap-code-box { background: var(--ink-50); border: 1px dashed var(--ink-300); border-radius: var(--r-md); padding: 12px 14px; margin: 10px 0; }
+.ap-code-lbl { font: var(--text-micro); text-transform: uppercase; letter-spacing: .07em; color: var(--ink-400); font-weight: 700; margin-bottom: 5px; }
+.ap-code { display: flex; align-items: center; gap: 12px; }
+.ap-code-val { font-family: var(--font-mono); font-size: 1.7rem; font-weight: 700; letter-spacing: .15em; color: var(--ink-900); }
+.ap-code.masked .ap-code-val { color: var(--ink-300); letter-spacing: .2em; font-size: 1.4rem; }
+.ap-locked { display: inline-flex; align-items: center; gap: 5px; font: var(--text-caption); color: var(--ink-400); }
+.ap-locked svg { width: 14px; height: 14px; }
+.ap-copy { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; background: none; border: 1px solid var(--ink-200); border-radius: var(--r-pill); padding: 5px 11px; font: var(--text-caption); font-weight: 600; color: var(--ink-700); cursor: pointer; }
+.ap-copy svg { width: 14px; height: 14px; }
+.ap-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding-top: 11px; border-top: 1px solid var(--ink-100); margin-top: 4px; }
+.ap-logged { display: inline-flex; align-items: center; gap: 5px; font: var(--text-micro); color: var(--ink-400); }
+.ap-logged svg { width: 13px; height: 13px; }
+.ap-done { display: inline-flex; align-items: center; gap: 6px; font: var(--text-caption); font-weight: 700; color: var(--success); }
+.ap-done svg { width: 15px; height: 15px; }
+
+@media (max-width: 720px) {
+  .tl-row { grid-template-columns: 60px 1fr; gap: 12px; }
+  .tl-track { left: 68px; }
+  .tl-dot { left: 63px; }
+}

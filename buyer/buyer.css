@@ -1,0 +1,80 @@
+/* ============================================================
+   Ilé — Buyer App (extends renter.css shell + landlord.css)
+   ============================================================ */
+
+/* Buyer stat-card text: flex column so labels/values never collide on wrap */
+.stat-top > div:first-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stat-ic.escrow { background: var(--escrow-bg); color: var(--escrow-text); }
+
+/* Escrow milestone tracker — horizontal, prominent */
+.milestones { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0; margin: 8px 0; }
+.ms { position: relative; padding: 0 8px; text-align: center; }
+.ms-line { position: absolute; top: 21px; left: -50%; width: 100%; height: 3px; background: var(--ink-200); z-index: 0; }
+.ms:first-child .ms-line { display: none; }
+.ms-node { width: 44px; height: 44px; border-radius: 50%; background: var(--surface); border: 3px solid var(--ink-200); display: grid; place-items: center; margin: 0 auto 10px; position: relative; z-index: 1; color: var(--ink-400); }
+.ms-node svg { width: 20px; height: 20px; }
+.ms.done .ms-node { background: var(--success); border-color: var(--success); color: #fff; }
+.ms.done .ms-line { background: var(--success); }
+.ms.active .ms-node { border-color: var(--escrow); color: var(--escrow); box-shadow: 0 0 0 5px var(--escrow-bg); }
+.ms.active .ms-line { background: linear-gradient(90deg, var(--success), var(--escrow)); }
+.ms-title { font: var(--text-sm); font-weight: 600; color: var(--ink-900); }
+.ms.todo .ms-title { color: var(--ink-400); }
+.ms-desc { font: var(--text-caption); color: var(--ink-500); margin-top: 3px; }
+.ms-amount { font-family: var(--font-mono); font-weight: 600; color: var(--ink-700); font-size: .8rem; margin-top: 4px; }
+.ms-date { font: var(--text-micro); color: var(--ink-400); font-family: var(--font-mono); margin-top: 2px; }
+
+/* Funds-held banner */
+.funds-banner { background: linear-gradient(135deg, var(--escrow) 0%, #4a32b8 100%); color: #fff; border-radius: var(--r-xl); padding: 24px; position: relative; overflow: hidden; }
+.funds-banner::after { content: ""; position: absolute; right: -30px; bottom: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,.08); }
+.funds-banner > * { position: relative; z-index: 1; }
+.funds-banner .lbl { font: var(--text-micro); text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.78); font-weight: 700; }
+.funds-banner .amt { font-family: var(--font-mono); font-size: 2.4rem; font-weight: 700; margin: 6px 0; }
+.funds-banner .lock-row { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.16); padding: 6px 12px; border-radius: var(--r-pill); font: var(--text-caption); font-weight: 600; }
+.funds-banner .lock-row svg { width: 15px; height: 15px; }
+
+/* Negotiation thread (offer chat) */
+.nego { display: flex; flex-direction: column; gap: 14px; padding: 8px 0; }
+.nego-event { max-width: 78%; }
+.nego-event.me { align-self: flex-end; }
+.nego-event.them { align-self: flex-start; }
+.offer-bubble { border-radius: 16px; padding: 14px 16px; border: 1.5px solid var(--ink-200); background: var(--surface); }
+.nego-event.me .offer-bubble { border-color: var(--green-200); background: var(--primary-softer); }
+.offer-bubble.counter { border-color: var(--gold-400); background: var(--gold-50); }
+.offer-bubble.accept { border-color: var(--success); background: var(--success-bg); }
+.offer-bubble .ob-kind { font: var(--text-micro); text-transform: uppercase; letter-spacing: .06em; font-weight: 700; color: var(--ink-500); }
+.offer-bubble .ob-amt { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; color: var(--ink-900); margin: 2px 0 6px; }
+.offer-bubble .ob-text { font: var(--text-sm); color: var(--ink-700); }
+.offer-bubble .ob-time { font: var(--text-micro); color: var(--ink-400); margin-top: 6px; display: block; }
+.msg-bubble { border-radius: 14px; padding: 10px 14px; font: var(--text-sm); line-height: 1.45; }
+.nego-event.them .msg-bubble { background: var(--surface); border: 1px solid var(--ink-150); }
+.nego-event.me .msg-bubble { background: var(--primary); color: #fff; }
+
+/* Mortgage calculator */
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.calc-result { background: linear-gradient(135deg, var(--green-700), var(--green-600)); color: #fff; border-radius: var(--r-xl); padding: 28px; position: sticky; top: 0; }
+.calc-result .big { font-family: var(--font-mono); font-size: 2.6rem; font-weight: 700; line-height: 1; margin: 8px 0; }
+.calc-result .big-lbl { font: var(--text-caption); color: rgba(255,255,255,.8); }
+.calc-breakdown { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.18); display: flex; flex-direction: column; gap: 12px; }
+.calc-breakdown .cb-row { display: flex; justify-content: space-between; font: var(--text-sm); }
+.calc-breakdown .cb-row .cb-k { color: rgba(255,255,255,.78); }
+.calc-breakdown .cb-row .cb-v { font-family: var(--font-mono); font-weight: 600; }
+.range-field { margin-bottom: 22px; }
+.range-field .rf-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.range-field .rf-label { font: var(--text-sm); font-weight: 600; color: var(--ink-800); }
+.range-field .rf-val { font-family: var(--font-mono); font-weight: 600; color: var(--primary); font-size: 1rem; }
+input[type=range].slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 99px; background: var(--ink-150); outline: none; }
+input[type=range].slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--primary); cursor: pointer; border: 3px solid #fff; box-shadow: var(--shadow-md); }
+input[type=range].slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--primary); cursor: pointer; border: 3px solid #fff; box-shadow: var(--shadow-md); }
+
+/* affordability donut already in landlord.css (.donut) */
+
+@media (max-width: 1080px) {
+  .calc-grid { grid-template-columns: 1fr; }
+  .calc-result { position: static; }
+  .milestones { grid-auto-flow: row; grid-auto-columns: auto; }
+  .ms { display: grid; grid-template-columns: 44px 1fr; gap: 14px; text-align: left; padding: 0 0 18px; }
+  .ms-node { margin: 0; }
+  .ms-line { top: 0; left: 21px; width: 3px; height: 100%; }
+  .ms:first-child .ms-line { display: block; }
+  .ms-title, .ms-desc, .ms-amount, .ms-date { grid-column: 2; }
+}
